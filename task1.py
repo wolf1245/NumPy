@@ -13,7 +13,11 @@
 
 # Дан массив, содержащий баллы слушателей курса по английскому языку за вступительный экзамен. Слушатели распределены по 15 группам по 10 человек.
 
-# In[ ]:
+# ### Задание 1
+# 
+# Посчитать, сколько слушателей получили 0 за вступительный экзамен.
+
+# In[3]:
 
 
 import numpy as np
@@ -34,124 +38,123 @@ scores = np.array([[20, 40, 56, 80, 0, 5, 25, 27, 74, 1],
          [50, 89, 70, 72, 56, 29, 15, 20, 0, 0]])
 
 
-# ### Задание 1
-# 
-# Посчитать, сколько слушателей получили 0 за вступительный экзамен.
-
-# In[ ]:
+# In[6]:
 
 
-### YOUR CODE HERE ###
+scores[scores == 0].size
 
 
 # ### Задание 2
 # 
 # Посчитать, сколько слушателей получили балл выше 50.
 
-# In[ ]:
+# In[7]:
 
 
-### YOUR CODE HERE ###
+scores[scores > 50].size
 
 
 # ### Задание 3
 # 
 # Посчитать, сколько человек получили балл не ниже 50, но не выше 70.
 
-# In[ ]:
+# In[9]:
 
 
-### YOUR CODE HERE ###
+scores[(scores >= 50) & (scores < 70)].size
 
 
 # ### Задание 4
 # 
 # Определить, в какой группе средний балл за вступительный экзамен выше.
 
-# In[ ]:
+# In[17]:
 
 
-### YOUR CODE HERE ###
+scores.mean(axis = 1).max()
 
 
 # ### Задание 5
 # 
 # Сохранить баллы слушателей выше 0 в массив `nonzero`. 
 
-# In[ ]:
+# In[19]:
 
 
-### YOUR CODE HERE ###
+nonzero = scores[scores != 0]
+nonzero
 
 
 # ### Задание 6
 # 
 # Используя массив `nonzero`, определить минимальный балл за вступительный балл по всем группам.
 
-# In[ ]:
+# In[20]:
 
 
-### YOUR CODE HERE ###
+nonzero.min()
 
 
 # ### Задание 7
 # 
 # Выбрать из массива `nonzero` только те значения, которые соответствуют продвинутому уровню знания языка – баллу за экзамен выше 80. Сохранить полученный результат в массив `advanced`. В заданиях 8-10 нужно работать с массивом `advanced`.
 
-# In[ ]:
+# In[21]:
 
 
-### YOUR CODE HERE ###
+advanced = nonzero[nonzero > 80]
+advanced
 
 
 # ### Задание 8
 # 
 # Определить размерность массива `advanced`.
 
-# In[ ]:
+# In[26]:
 
 
-### YOUR CODE HERE ###
+advanced.shape
 
 
 # ### Задание 9
 # 
 # Определить форму массива `advanced`.
 
-# In[ ]:
+# In[28]:
 
 
-### YOUR CODE HERE ###
+advanced.ndim
 
 
 # ### Задание 10
 # 
 # Определить общее число элементов в массиве `advanced`.
 
-# In[ ]:
+# In[29]:
 
 
-### YOUR CODE HERE ###
+advanced.size
 
 
 # ### Задание 11
 # 
 # На основе исходного массива `scores` создать булев массив `sto`, где `True` соответствует баллам за экзамен, равным 100, а `False` – всем остальным баллам. 
 
-# In[ ]:
+# In[31]:
 
 
-### YOUR CODE HERE ###
+sto = scores == 100
+sto
 
 
 # ### Задание 12
 # 
 # На основе исходного массива `scores` вывести на экран оценки слушателей первых семи групп (включительно, должны быть 7 списков оценок).
 
-# In[ ]:
+# In[35]:
 
 
-### YOUR CODE HERE ###
+scores[0:7]
 
 
 # .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> .<br> 
@@ -161,7 +164,7 @@ scores = np.array([[20, 40, 56, 80, 0, 5, 25, 27, 74, 1],
 
 # В заданиях 1-2 необходимо работать с массивом `A`:
 
-# In[ ]:
+# In[37]:
 
 
 A = np.array([[2, 9, 8, 0],
@@ -190,10 +193,15 @@ A = np.array([[2, 9, 8, 0],
 # 
 # **Подсказка:** можно почитать про цикл *for* на [pythontutor.ru](https://pythontutor.ru/lessons/for_loop/). На самом деле, если вспомнить про выбор элементов в массиве `NumPy`, то одного цикла будет достаточно, условные конструкции не понадобятся.
 
-# In[ ]:
+# In[40]:
 
 
-### YOUR CODE HERE ###
+rows, cols = A.shape
+A_tr = np.empty((cols, rows), dtype=A.dtype)
+for i in range(rows):
+    for j in range(cols):
+        A_tr[j][i] = A[i][j]
+A_tr
 
 
 # ### Задание 2
@@ -202,10 +210,10 @@ A = np.array([[2, 9, 8, 0],
 # 
 # **Подсказка:** для сравнения массивов целиком, не поэлементно, можно использовать [функцию](https://docs.scipy.org/doc/numpy/reference/generated/numpy.array_equal.html) `array_equal()`.
 
-# In[ ]:
+# In[43]:
 
 
-### YOUR CODE HERE ###
+np.array_equal(A_tr, A.T)
 
 
 # ### Задание 3
@@ -216,24 +224,25 @@ A = np.array([[2, 9, 8, 0],
 # 
 # Определить доход студента за неделю, используя [метод](https://docs.scipy.org/doc/numpy/reference/generated/numpy.dot.html) `.dot()` для нахождения [скалярного произведения](https://ru.wikipedia.org/wiki/%D0%A1%D0%BA%D0%B0%D0%BB%D1%8F%D1%80%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5). 
 
-# In[ ]:
+# In[45]:
 
 
 classes = np.array([3, 3, 2, 0, 2])
 prices = np.array([1500, 1500, 2500, 1000, 1000])
 
 
-# In[ ]:
+# In[46]:
 
 
-### YOUR CODE HERE ###
+income = classes.dot(prices)
+income
 
 
 # ### Задание 4
 # 
 # По результатам работы с данными по оценкам за эссе студентов, поставленным двумя разными экспертами, были созданы два булевых массива `expert1` и `expert2`, в которых значение `True` означает оценку «удовлетворительно» и выше, а значение `False` – неудовлетворительно. Всего было оценено 15 эссе, по 5 эссе на каждую из трёх тем.
 
-# In[ ]:
+# In[47]:
 
 
 expert1 = np.array([[True, False, False, True, True],
@@ -244,10 +253,11 @@ expert2 = np.array([[True, False, False, False, True],
                    [True, False, True, False, False]])
 
 
-# In[ ]:
+# In[54]:
 
 
-### YOUR CODE HERE ###
+agreed_grades = expert1 & expert2
+agreed_grades[agreed_grades == True].size
 
 
 # Определить, используя различные логические операторы (`|`, `&`, и проч.) и вспомогательные методы/функции, сколько студентов получат зачёт, если известно, что для этого необходимо получить оценку не ниже удовлетворительной у обоих экспертов.
@@ -256,7 +266,7 @@ expert2 = np.array([[True, False, False, False, True],
 # 
 # Дан массив `essay` с итоговыми оценками студентов за эссе из задачи 4:
 
-# In[ ]:
+# In[55]:
 
 
 # pass - сдал
@@ -269,10 +279,15 @@ essay = np.array([["pass", "not pass", "not pass", "not pass", "pass"],
 
 # Проверить ответ в предыдущей задаче, используя массив `essay`. Решение должно быть представлено в виде кода, не в виде выводов в результате явного подсчёта элементов.
 
-# In[ ]:
+# In[60]:
 
 
-### YOUR CODE HERE ###
+rez = np.empty(3, 5)
+for i in range(agreed_grades.size):
+    for j in range(essay.size):
+        rez[i] = [agreed_grades[i], essay[j]]
+        
+rez
 
 
 # ### Задание 6
@@ -287,8 +302,18 @@ essay = np.array([["pass", "not pass", "not pass", "not pass", "pass"],
 # 
 # В качестве множеств $A$ и $B$ в данной задаче выступают множества (группы) студентов, которые получили зачёт у первого и второго экспертов.
 
+# In[62]:
+
+
+intersection = expert1 & expert2
+num_students_expert1 = np.sum(expert1, axis=1)
+num_students_expert2 = np.sum(expert2, axis=1)
+jaccard_similarity = intersection.sum(axis=1) / (num_students_expert1 + num_students_expert2 - intersection.sum(axis=1))
+jaccard_similarity
+
+
 # In[ ]:
 
 
-### YOUR CODE HERE ###
+
 
